@@ -97,3 +97,19 @@ nav > span {
   transform: scale3d(1.1, 1.1, 3);
   color: #21815e;
 }
+
+.loginModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.loginModal.show {
+  display: block;
+}
