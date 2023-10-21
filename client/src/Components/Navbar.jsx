@@ -5,8 +5,6 @@ import Blogs from "../pages/Blogs";
 import About from "../pages/About";
 import UploadBlog from "../pages/UploadBlog";
 import Profile from "../pages/Profile";
-import { BsSearch } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
 
 const Navbar = () => {
   const [loginState, setLoginState] = useState(false);
@@ -37,6 +35,9 @@ const Navbar = () => {
   };
   const handleLoginButtonClick = () => {
     setLoginState(true);
+    setTimeout(() => {
+      setLoginState(false);
+    }, 3000)
   };
   return (
     <>
