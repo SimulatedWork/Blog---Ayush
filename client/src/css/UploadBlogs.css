@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato&display=swap");
+
+:root {
+  --primary: #5effc5;
+  --secondary: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.BlogPostingHead {
+  text-align: center;
+  margin-top: 20px;
+  font-family: "Lato", sans-serif;
+  font-size: 6vh;
+}
+
+.BlogPostingHead span {
+  color: var(--primary);
+  -webkit-text-stroke: 0.25px var(--secondary);
+}
+
+.BlogPostingParentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5vh;
+  margin-top: 50px;
+}
+
+.BlogPostingInputContainer {
+  height: 70vh;
+  width: 35vw;
+}
+
+.BlogPostingContentContainer > textarea {
+  height: 70vh;
+  width: 50vw;
+}
+
+.BlogTitle {
+  width: 24vw;
+  height: 6vh;
+  padding: 2%;
+  font-size: 2vh;
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+  border-radius: 10px;
+}
+
+.BlogCoverImage {
+  border: 1px solid black;
+  color: #222;
+  display: flex;
+  width: 24vw;
+  height: 6vh;
+  padding: 2%;
+  font-size: 2vh;
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 10px;
+}
+
+.BlogPostingInputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.BlogPostingPublishButton {
+    height: 6vh;
+    width: 10vw;
+    border-radius: 6px;
+    font-size: 2.5vh;
+    font-weight: bold;
+    background-color: var(--primary);
+    border: none;
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all .1s;
+}
+
+.BlogPostingPublishButton:active {
+    transform: translate3d(1px, 2px, 3px);
+    box-shadow: none;
+}
