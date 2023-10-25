@@ -47,7 +47,17 @@
   height: 6vh;
   padding: 2%;
   font-size: 2vh;
-  font-weight: bold;
+  font-weight: lighter;
+  font-family: "Lato", sans-serif;
+  border-radius: 10px;
+}
+
+.BlogCategory {
+  width: 24vw;
+  height: 6vh;
+  padding: 2%;
+  font-size: 2vh;
+  font-weight: lighter;
   font-family: "Lato", sans-serif;
   border-radius: 10px;
 }
@@ -60,11 +70,12 @@
   height: 6vh;
   padding: 2%;
   font-size: 2vh;
-  font-weight: bold;
+  font-weight: lighter;
   font-family: "Lato", sans-serif;
   align-items: center;
   justify-content: space-evenly;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .BlogPostingInputContainer {
@@ -75,19 +86,51 @@
 }
 
 .BlogPostingPublishButton {
-    height: 6vh;
-    width: 10vw;
-    border-radius: 6px;
-    font-size: 2.5vh;
-    font-weight: bold;
-    background-color: var(--primary);
-    border: none;
-    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: all .1s;
+  height: 6vh;
+  width: 10vw;
+  border-radius: 6px;
+  font-size: 2.5vh;
+  font-weight: bold;
+  background-color: var(--primary);
+  border: none;
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.1s;
 }
 
 .BlogPostingPublishButton:active {
-    transform: translate3d(1px, 2px, 3px);
-    box-shadow: none;
+  transform: translate3d(1px, 2px, 3px);
+  box-shadow: none;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 2vh;
+}
+
+.category {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid darkblue;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+}
+
+.blogContent {
+  padding: 15px;
+  border-radius: 2vh;
+  font-size: 2vh;
+}
+
+.addCategoryDirections {
+  font-size: normal;
+  margin-left: 1vh;
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
+  color: seagreen;
 }
