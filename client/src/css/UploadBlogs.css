@@ -105,8 +105,9 @@
 
 .categories {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  column-gap: 2vh;
+  grid-template-columns: auto auto auto;
+  column-gap: 1vh;
+  row-gap: 1vh;
 }
 
 .category {

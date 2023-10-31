@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "../css/Navbar.css";
 import { RotatingLines } from "react-loader-spinner";
 import Blogs from "../pages/Blogs";
 import About from "../pages/About";
 import UploadBlog from "../pages/UploadBlog";
 import Profile from "../pages/Profile";
+import { FcGoogle } from "react-icons/fc";
 
 const Navbar = () => {
   const [loginState, setLoginState] = useState(false);
   const [activeComponent, setActiveComponent] = useState(<Blogs />);
+  const modalRef = useRef(null);
   const handleElementChange = (e, componentName) => {
     const navComponents = document.querySelectorAll(".nav-comp");
     navComponents.forEach((el) => {
@@ -35,10 +37,18 @@ const Navbar = () => {
   };
   const handleLoginButtonClick = () => {
     setLoginState(true);
-    setTimeout(() => {
-      setLoginState(false);
-    }, 3000)
   };
+  const handleOutsideClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setLoginState(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
   return (
     <>
       <div className="navbar">
@@ -99,7 +109,22 @@ const Navbar = () => {
           )}
         </button>
         <div className={`loginModal ${loginState ? "show" : ""} `}>
-          <div className="modalContent"></div>
+          <div className="modalContent" ref={modalRef}>
+            <h1>Bloggery</h1>
+            <p>Login</p>
+            <div className="input-container">
+              <input type="text" placeholder="Email" />
+              <input type="password" placeholder="Password" />
+            </div>
+            <div className="button-container">
+              <button>Login</button>
+              <button>
+                Continue with google <FcGoogle />
+              </button>
+              <p>OR</p>
+              <button>Sign up</button>
+            </div>
+          </div>
         </div>
       </div>
       {activeComponent}

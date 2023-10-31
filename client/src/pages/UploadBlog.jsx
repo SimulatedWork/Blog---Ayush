@@ -11,6 +11,8 @@ const UploadBlog = () => {
     image: "",
     content: "",
   });
+  const [category, setCategory] = useState(data);
+  const [newCategory, setNewCategory] = useState("");
   const handleCategoryClick = (e, name) => {
     if (newBlog.categories.includes(name)) {
       const updatedCategories = newBlog.categories.filter(
@@ -25,16 +27,48 @@ const UploadBlog = () => {
     }
   };
   const handleCategoryAddititon = (event) => {
-    event.preventDefault();
-    if (event.keyCode == 13) {
-      log("Enter key is pressed");
+    if (event.keyCode == 13 && newCategory.trim() != "") {
+      event.target.value = "";
+      log("Enter key pressed");
+      setNewBlog({
+        ...newBlog,
+        categories: [...newBlog.categories, newCategory],
+      });
+      setCategory([
+        ...category,
+        { id: category.length + 1, name: newCategory },
+      ]);
     }
   };
-  const handleImageInput = (e) => {
+  const handleImageInput = async (e) => {
     const file = e.target.files[0];
-    const fileReader = new FileReader(file);
-    fileReader.onloadend(fileReader.result);
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append(
+        "upload_preset",
+        import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+      );
+      try {
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${
+            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+          }/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const data = await response.json();
+        const imageUrl = data.secure_url;
+        setNewBlog({ ...newBlog, image: imageUrl });
+      } catch (error) {
+        console.error("Error uploading image to Cloudinary:", error);
+      }
+    }
   };
+
   return (
     <>
       <h1 style={{ textAlign: "center" }} className="BlogPostingHead">
@@ -55,6 +89,8 @@ const UploadBlog = () => {
               type="text"
               className="BlogCategory"
               placeholder="Add a new category"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
               onKeyDown={handleCategoryAddititon}
             />
             <p className="addCategoryDirections">
@@ -63,14 +99,14 @@ const UploadBlog = () => {
           </div>
 
           <div className="categories">
-            {data.map((category) => {
+            {category.map((categories) => {
               return (
                 <div
                   className="category"
-                  key={category.id}
-                  onClick={(e) => handleCategoryClick(e, category.name)}
+                  key={categories.id}
+                  onClick={(e) => handleCategoryClick(e, categories.name)}
                 >
-                  {category.name}
+                  {categories.name}
                 </div>
               );
             })}
@@ -82,6 +118,20 @@ const UploadBlog = () => {
             <p>Choose a cover image for your blog</p>
             <AiFillFolder />
           </div>
+          {newBlog.image === "" ? (
+            ""
+          ) : (
+            <a
+              style={{
+                textDecoration: "none",
+              }}
+              href={newBlog.image}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Selected Image
+            </a>
+          )}
           <input
             type="file"
             style={{ display: "none" }}

@@ -10,5 +10,17 @@
   {
     "id": 3,
     "name": "Research"
+  },
+  {
+    "id": 4,
+    "name": "Science"
+  },
+  {
+    "id": 5,
+    "name": "Technology"
+  },
+  {
+    "id": 6,
+    "name": "Education"
   }
 ]
