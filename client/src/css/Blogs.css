@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato&display=swap");
+
+:root {
+  --primary: #5effc5;
+  --secondary: #000000;
+  --text: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.blog-head-container {
+    padding: 5vh;
+    margin: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: start; 
+    gap: 10vh;
+}

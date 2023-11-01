@@ -107,7 +107,7 @@ nav > span {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(96, 96, 96, 0.4);
+  background-color: rgba(88, 88, 88, 0.5);
 }
 
 .loginModal.show {
@@ -116,7 +116,7 @@ nav > span {
 
 .modalContent {
   height: 80vh;
-  width: 32vw;
+  width: 30vw;
   margin: 5% auto;
   background-color: var(--secondary);
   color: var(--primary);
@@ -160,7 +160,7 @@ nav > span {
   border-radius: 4px;
   font-size: 16px;
   box-shadow: 1px 1px 0px 1px var(--primary);
-  transition: all .1s;
+  transition: all 0.3s;
   cursor: pointer;
 }
 
@@ -177,4 +177,35 @@ nav > span {
   align-items: center;
   justify-content: center;
   gap: 1vh;
+}
+
+.signupModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(88, 88, 88, 0.5);
+}
+
+.signupModal.show {
+  display: block;
+}
+
+.signupModalContent {
+  height: 80vh;
+  width: 30vw;
+  margin: 5% auto;
+  background-color: var(--secondary);
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5vh;
+  font-family: "Open sans", sans-serif;
+  border-radius: 10%;
 }
