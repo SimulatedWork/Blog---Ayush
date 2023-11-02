@@ -23,6 +23,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-#developers' added files and folders
-testing_data
