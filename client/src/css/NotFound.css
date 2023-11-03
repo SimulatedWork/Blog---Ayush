@@ -1,0 +1,13 @@
+:root {
+  --primary: #5effc5;
+  --secondary: #000000;
+}
+
+.container h1 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.container h1 span {
+  color: var(--primary);
+  -webkit-text-stroke: var(--secondary) 1.25px;
+}

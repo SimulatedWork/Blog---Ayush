@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato&display=swap");
+
+:root {
+  --primary: #5effc5;
+  --secondary: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+.blog-info-container {
+  width: 75%;
+  height: fit-content;
+  border-radius: 5vh;
+  margin: 5% auto;
+  padding: 5vh;
+  border: 1px solid black;
+  display: flex;
+  align-items: start;
+  justify-content: space-evenly;
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.blog-info-container div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5vh;
+}
+
+.blog-info-container div:nth-child(2) {
+  width: max-content;
+  padding: 5vh;
+}

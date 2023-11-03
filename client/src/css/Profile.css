@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lato&display=swap");
+
+:root {
+  --primary: #5effc5;
+  --secondary: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+.container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4vh;
+}
+
+.info {
+  font-size: x-large;
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
+}
+
+.login-button {
+  background-color: var(--primary);
+  border: none;
+  height: 5vh;
+  width: 10vw;
+  font-size: 16px;
+  font-family: "Open sans", sans-serif;
+  font-weight: 800;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px 1px #222;
+  transition: all 0.2s;
+}
+
+.login-button:active {
+  box-shadow: none;
+}
+
+.profileContainer {
+  padding: 5vh 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 5vh;
+  justify-content: space-around;
+}
+
+.userDetails {
+  display: flex;
+  align-items: top;
+  justify-content: center;
+  gap: 20px;
+}
+
+.userDetails div {
+    box-shadow: -5px 5px 20px 2px var(--secondary);
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.userDetails div:hover {
+    box-shadow: -5px 5px 20px 2px var(--primary);
+}
+
+.user-image-name {
+  height: 40vh;
+  width: 40vh;
+  border-radius: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5vh;
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.user-image-name img {
+  border-radius: 80vh;
+  border: solid var(--primary) 2px;
+}
+
+.social-info {
+  border: 1px solid #333;
+  height: 20vh;
+  width: 40vh;
+  border-radius: 5vh;
+  background-color: var(--secondary);
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
+}
+
+.social-info span {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 2vh;
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.user-blogs {
+  display: flex;
+  gap: 5vh;
+  align-items: start;
+  justify-content: flex-start;
+}

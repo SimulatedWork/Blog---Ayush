@@ -105,8 +105,9 @@
 
 .categories {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  column-gap: 2vh;
+  grid-template-columns: auto auto auto;
+  column-gap: 1vh;
+  row-gap: 1vh;
 }
 
 .category {
@@ -133,4 +134,36 @@
   font-family: "Lato", sans-serif;
   font-weight: 600;
   color: seagreen;
+}
+
+.loginContainer {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5vh;
+}
+
+.loginContainer h1 {
+  font-family: "Lato", sans-serif;
+  font-weight: 1000;
+}
+
+.loginContainer button {
+  height: 5vh;
+  width: 12vw;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 5px;
+  font-family: "Open sans", sans-serif;
+  font-size: large;
+  font-weight: 900;
+  box-shadow: 2px 2px 3px 1px #222;
+  transition: all .2s;
+  cursor: pointer;
+}
+
+.loginContainer button:active {
+  box-shadow: none;
 }
