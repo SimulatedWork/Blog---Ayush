@@ -1,34 +1,24 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
   const navigate = useNavigate();
-  const location = useLocation();
-  const path = location.pathname;
+  const [activeComponent, setActiveComponent] = useState(
+    document.querySelectorAll(".nav-comp")[0]
+  );
+
   useEffect(() => {
-    const routes = ["/", "/about", "/profile", "/upload"];
-    if (!routes.includes(path)) {
-      const navComponents = document.querySelectorAll(".nav-comp");
-      navComponents.forEach((el) => {
-        el.classList.remove("active-space");
-      });
-    }
-  }, [path]);
+    console.log(activeComponent);
+  }, [activeComponent]);
+
   const handleElementChange = (e, componentName) => {
-    const navComponents = document.querySelectorAll(".nav-comp");
-    navComponents.forEach((el) => {
-      el.classList.remove("active-space");
-    });
-    if (componentName == "blogs") {
-      navigate("/", { replace: true });
-    } else {
-      navigate(`/${componentName}`, { replace: true });
-    }
-    e.target.classList.add("active-space");
+    setActiveComponent(e.target);
+    navigate(`/${componentName}`, { replace: true });
   };
+
   return (
     <>
       <div className="navbar">
@@ -47,28 +37,49 @@ const Navbar = () => {
 
         <nav>
           <span
-            className="active-space nav-comp"
-            onClick={(e) => handleElementChange(e, "blogs")}
+            className={`nav-comp ${
+              activeComponent == null
+                ? ""
+                : activeComponent == document.querySelectorAll(".nav-comp")[0]
+                ? "active-space"
+                : ""
+            }`}
+            onClick={(e) => handleElementChange(e, "")}
           >
             Blogs
           </span>
           <span
-            className="nav-comp"
-            name="about"
+            className={`nav-comp ${
+              activeComponent == null
+                ? ""
+                : activeComponent == document.querySelectorAll(".nav-comp")[1]
+                ? "active-space"
+                : ""
+            }`}
             onClick={(e) => handleElementChange(e, "about")}
           >
             About?
           </span>
           <span
-            name="profile"
-            className="nav-comp"
+            className={`nav-comp ${
+              activeComponent == null
+                ? ""
+                : activeComponent == document.querySelectorAll(".nav-comp")[2]
+                ? "active-space"
+                : ""
+            }`}
             onClick={(e) => handleElementChange(e, "profile")}
           >
             Profile
           </span>
           <span
-            name="post-blog"
-            className="nav-comp"
+            className={`nav-comp ${
+              activeComponent == null
+                ? ""
+                : activeComponent == document.querySelectorAll(".nav-comp")[3]
+                ? "active-space"
+                : ""
+            }`}
             onClick={(e) => handleElementChange(e, "upload")}
           >
             Post Blog

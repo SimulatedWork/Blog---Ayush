@@ -51,7 +51,11 @@ const Blog = (blog) => {
         })}
       </div>
       <div className="publisherDetails">
-        <img src={blog?.blog?.profile} alt="profile" height={50} />
+        <img
+          src={blog?.blog?.profile !== null ? blog?.blog?.profile : "/man.png"}
+          alt="profile"
+          height={50}
+        />
         <div className="publisherName">
           <p>{blog?.blog?.name}</p>
           <span>{relativeTime}</span>

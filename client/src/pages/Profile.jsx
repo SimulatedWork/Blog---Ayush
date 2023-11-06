@@ -11,7 +11,6 @@ const Profile = () => {
   const user_blogs = blogs.filter((blog) => {
     return blog?.email === user?.email;
   });
-  console.log(user);
   return (
     <>
       <Navbar />
