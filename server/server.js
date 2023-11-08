@@ -4,6 +4,8 @@ const app = express();
 const cors = require("cors");
 const connectToMongoDB = require("./connections/MongoConnection");
 const userRouter = require("./controllers/UserController");
+const blogRouter = require("./controllers/BlogController");
+const commentRouter = require("./controllers/CommentController");
 const PORT = process.env.PORT;
 const log = console.log;
 
@@ -15,6 +17,8 @@ app.get("/", (req, resp) => {
 });
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/blogs", blogRouter);
+app.use("/api/v1/comments", commentRouter);
 
 app.listen(PORT, () => {
   connectToMongoDB();
