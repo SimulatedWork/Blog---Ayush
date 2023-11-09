@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Reply = require("./Reply");
 
 const CommentSchema = new mongoose.Schema({
   content: {
@@ -8,20 +7,18 @@ const CommentSchema = new mongoose.Schema({
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "User", // Reference to the User model
     required: true,
   },
   blog_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Blog",
+    ref: "Blog", // Reference to the Blog model
     required: true,
   },
-  replies: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Reply",
-    },
-  ],
+  repliedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment", // Reference to the Comment model for nesting replies
+  },
   createdAt: {
     type: Date,
     default: Date.now,

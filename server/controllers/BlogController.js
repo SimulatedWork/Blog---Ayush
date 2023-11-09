@@ -75,4 +75,23 @@ blogRouter.put("/edit/:id", authenticateToken, async (req, resp) => {
   }
 });
 
+blogRouter.post("/likes/:blogId/:userId", async (req, resp) => {
+  const { blogId, userId } = req.params;
+  try {
+    const blog = await Blog.findOne({ _id: blogId });
+    if (!blog) {
+      resp.status(400).json({ message: "No such blogs" });
+    }
+    if (blog.likes.includes(userId)) {
+      blog.likes.splice(blog.likes.indexOf(userId), 1);
+    } else {
+      blog.likes.push(userId);
+    }
+    await blog.save();
+    resp.status(201).json(blog);
+  } catch (e) {
+    resp.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = blogRouter;
