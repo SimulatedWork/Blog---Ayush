@@ -29,13 +29,17 @@ userRouter.post("/signup", async (req, resp) => {
   try {
     const getUser = await User.findOne({ email });
     if (getUser) {
-      resp.status(400).json({ error: "Email already exists. Please Login." });
+      return resp
+        .status(400)
+        .json({ error: "Email already exists. Please Login." });
     }
+
     if (!name || !email || !password) {
       return resp
         .status(400)
         .json({ error: "Please provide name, email, and password." });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       name,
@@ -43,10 +47,15 @@ userRouter.post("/signup", async (req, resp) => {
       password: hashedPassword,
       profile: profile[Math.floor(Math.random() * profile.length)],
     });
+
     await user.save();
+
     const token = signToken({ email, password });
+
+    // Send headers and response together
     resp.status(201).json({ ...user._doc, token });
   } catch (error) {
+    // Handle unexpected errors
     resp.status(400).json({ error: error.message });
   }
 });

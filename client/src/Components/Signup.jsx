@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setError, setUser } from "../reducers/userSlice";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const activeUser = useSelector((state) => state);
+  console.log(activeUser);
+  const navigate = useNavigate();
   const [cred, setCred] = useState({
     name: "",
     email: "",
@@ -20,14 +26,21 @@ const Signup = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        localStorage.setItem("user", JSON.stringify(data));
+        if (data.error) {
+          dispatch(setError(data.error));
+        } else {
+          dispatch(setUser(data));
+        }
       })
       .catch((e) => {
         console.log(e);
       });
   };
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (activeUser?.userInfo) {
+      navigate("/", { replace: true });
+    }
+  }, [activeUser, navigate]);
   return (
     <div className="container">
       <h2>Bloggery</h2>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../reducers/userSlice";
+import { setError, setUser } from "../reducers/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,13 +26,16 @@ const Login = () => {
         body: JSON.stringify(credential),
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
+      // if (!response.ok) {
+      //   throw new Error("Login failed");
+      // }
 
       const data = await response.json();
-      dispatch(setUser(data));
-      console.log(data);
+      if (data.error) {
+        dispatch(setError(data.error));
+      } else {
+        dispatch(setUser(data));
+      }
     } catch (err) {
       console.log(err);
     } finally {
