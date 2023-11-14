@@ -4,6 +4,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require("../middlewares/Authorization");
 const userRouter = express.Router();
+const profile = [
+  "https://res.cloudinary.com/dcj2allfp/image/upload/v1699522695/n8dzabkvlxvtskexi9sx.png",
+  "https://res.cloudinary.com/dcj2allfp/image/upload/v1699522696/yuqg9fxuzsvngqqo5rg4.gif",
+  "https://res.cloudinary.com/dcj2allfp/image/upload/v1699522953/qzr7kmn6wl1zla5so5az.png",
+  "https://res.cloudinary.com/dcj2allfp/image/upload/v1699522952/nvjhq2jnap75ggj0ddap.png",
+  "https://res.cloudinary.com/dcj2allfp/image/upload/v1699522951/wxqlbvip0b0lnbec9kq9.png",
+];
 
 // Getting all the users
 userRouter.get("/", authenticateToken, async (req, res) => {
@@ -34,6 +41,7 @@ userRouter.post("/signup", async (req, resp) => {
       name,
       email,
       password: hashedPassword,
+      profile: profile[Math.floor(Math.random() * profile.length)],
     });
     await user.save();
     const token = signToken({ email, password });

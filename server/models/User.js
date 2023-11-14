@@ -5,10 +5,6 @@ const UserSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    validate: {
-      validator: (name) => typeof name === "string" && !validator.isEmpty(name),
-      message: "Name must be a non-empty string.",
-    },
   },
   email: {
     type: String,
@@ -23,6 +19,9 @@ const UserSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  profile: {
+    type: String,
   },
 });
 
