@@ -2,7 +2,6 @@ import { AiFillFolder } from "react-icons/ai";
 import "../css/UploadBlogs.css";
 import data from "../testing_data/category.json";
 import { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import Navbar from "../Components/Navbar";
 
 const UploadBlog = () => {
@@ -14,7 +13,7 @@ const UploadBlog = () => {
   });
   const [category, setCategory] = useState(data);
   const [newCategory, setNewCategory] = useState("");
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const isAuthenticated = true;
   const handleCategoryClick = (e, name) => {
     if (newBlog.categories.includes(name)) {
       const updatedCategories = newBlog.categories.filter(
@@ -172,7 +171,7 @@ const UploadBlog = () => {
           <h1>
             You are logged out, Login to post blogs to <strong>Bloggery</strong>
           </h1>
-          <button onClick={() => loginWithRedirect()}>Login</button>
+          <button onClick={() => alert()}>Login</button>
         </div>
       )}
       ;

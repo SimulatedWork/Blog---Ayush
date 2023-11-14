@@ -4,7 +4,7 @@ import blogs from "../testing_data/blogs.json";
 const BlogInfo = () => {
   const location = useLocation();
   var path = location.pathname.split("/")[2] - 1;
-  if (path > blogs.length) {
+  if (path > blogs.length || path < 0) {
     window.close();
   }
   return (

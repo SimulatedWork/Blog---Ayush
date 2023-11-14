@@ -57,22 +57,19 @@ userRouter.post("/login", async (req, resp) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      resp.status(400).json({ error: "Please check your email." });
+      return resp.status(400).json({ error: "Please check your email." });
     }
-    bcrypt.compare(password, user.password, (err, res) => {
-      if (err) {
-        resp.status(500).json({ error: "Something went wrong!" });
-      }
 
-      if (res) {
-        const token = signToken({ email, password });
-        resp.status(201).json({ ...user._doc, token });
-      } else {
-        resp.status(501).json({ error: "Password is incorrect." });
-      }
-    });
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      const token = signToken({ email, password });
+      return resp.status(201).json({ ...user._doc, token });
+    } else {
+      return resp.status(401).json({ error: "Password is incorrect." });
+    }
   } catch (error) {
-    resp.status(500).json({ e: error.message });
+    return resp.status(500).json({ error: error.message });
   }
 });
 

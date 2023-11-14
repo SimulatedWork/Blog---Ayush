@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const isAuthenticated = true;
   const navigate = useNavigate();
   const [activeComponent, setActiveComponent] = useState(
     document.querySelectorAll(".nav-comp")[0]
@@ -86,11 +85,11 @@ const Navbar = () => {
           </span>
         </nav>
         {isAuthenticated ? (
-          <button className="login button" onClick={() => logout()}>
+          <button className="login button" onClick={() => alert()}>
             Logout
           </button>
         ) : (
-          <button className="login button" onClick={() => loginWithRedirect()}>
+          <button className="login button" onClick={() => alert()}>
             Login
           </button>
         )}
