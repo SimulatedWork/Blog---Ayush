@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser } from "../reducers/userSlice";
 
 const Navbar = () => {
+  const activeUser = useSelector((state) => state);
+  console.log(activeUser);
   const isAuthenticated = true;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [activeComponent, setActiveComponent] = useState(
     document.querySelectorAll(".nav-comp")[0]
   );
@@ -85,7 +90,10 @@ const Navbar = () => {
           </span>
         </nav>
         {isAuthenticated ? (
-          <button className="login button" onClick={() => alert()}>
+          <button
+            className="login button"
+            onClick={() => dispatch(clearUser())}
+          >
             Logout
           </button>
         ) : (

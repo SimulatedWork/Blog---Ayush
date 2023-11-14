@@ -2,7 +2,6 @@ import "../css/Blog.css";
 import { useEffect, useState } from "react";
 
 const Blog = (blog) => {
-  console.log(blog.blog);
   // const blog = blog.blog
   const [relativeTime, setRelativeTime] = useState("");
   const categories = blog?.blog?.category?.slice(0, 2);

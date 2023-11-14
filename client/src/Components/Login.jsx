@@ -1,34 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../reducers/userSlice";
 
 const Login = () => {
-  const [cred, setCred] = useState({
+  const navigate = useNavigate();
+  const [credential, setCredential] = useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const activeUser = useSelector((state) => state);
+  const dispatch = useDispatch();
+  console.log(activeUser);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:8000/api/v1/users/login", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(cred),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // Handle the JSON data here
-        // console.log(data?.profile);
-        console.log(data);
-      })
-      .catch((err) => {
-        // Handle any errors that occurred during the fetch
-        console.error(err);
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/users/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(credential),
       });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      dispatch(setUser(data));
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeUser?.userInfo) {
+      navigate("/", { replace: true });
+    }
+  }, [activeUser, navigate]);
+
   return (
     <div className="container">
       <h2>Bloggery</h2>
@@ -37,16 +54,24 @@ const Login = () => {
         <input
           type="text"
           required
-          value={cred.email}
-          onChange={(e) => setCred({ ...cred, email: e.target.value })}
+          value={credential.email}
+          onChange={(e) =>
+            setCredential({ ...credential, email: e.target.value })
+          }
+          disabled={loading}
         />
         <input
           type="password"
           required
-          value={cred.password}
-          onChange={(e) => setCred({ ...cred, password: e.target.value })}
+          value={credential.password}
+          onChange={(e) =>
+            setCredential({ ...credential, password: e.target.value })
+          }
+          disabled={loading}
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
       </form>
       <button onClick={() => navigate("/users/signup", { replace: true })}>
         Sign up
