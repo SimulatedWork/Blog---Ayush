@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 
 const Blog = (blog) => {
   // const blog = blog.blog
+  console.log(blog.blog);
   const [relativeTime, setRelativeTime] = useState("");
-  const categories = blog?.blog?.category?.slice(0, 2);
   useEffect(() => {
     const currentTime = new Date().getTime();
     const postTime = new Date(blog?.blog?.created_at).getTime();
@@ -36,27 +36,17 @@ const Blog = (blog) => {
     <div
       className="blog-container"
       title={blog?.blog?.blog_title}
-      onClick={() => window.open(`/blog/${blog?.blog?.id}`)}
+      onClick={() => {
+        const blogData = encodeURIComponent(JSON.stringify(blog?.blog));
+        window.open(`/blog/${blog?.blog?._id}?data=${blogData}`);
+      }}
     >
-      <img src={"/profile.svg"} alt="profile" height={120} />
-      <p style={{ fontSize: "24px" }}>{blog?.blog?.blog_title}</p>
-      <div className="category-container">
-        {categories?.map((category) => {
-          return (
-            <div className="category" key={blog?.blog?.created_at}>
-              {category}
-            </div>
-          );
-        })}
-      </div>
+      <img src={blog?.blog?.cover_image} alt="profile" height={100}/>
+      <p style={{ fontSize: "20px", padding: "10px" }}>{blog?.blog?.title}</p>
       <div className="publisherDetails">
-        <img
-          src={blog?.blog?.profile !== null ? blog?.blog?.profile : "/man.png"}
-          alt="profile"
-          height={50}
-        />
+        <img src={blog?.blog?.author_id?.profile} alt="profile" height={50} />
         <div className="publisherName">
-          <p>{blog?.blog?.name}</p>
+          <p>{blog?.blog?.author_id?.name}</p>
           <span>{relativeTime}</span>
         </div>
       </div>

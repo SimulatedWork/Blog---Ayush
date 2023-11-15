@@ -1,20 +1,32 @@
-import { useLocation } from "react-router-dom";
 import "../css/BlogInfo.css";
-import blogs from "../testing_data/blogs.json";
+import { useEffect, useState } from "react";
 const BlogInfo = () => {
-  const location = useLocation();
-  var path = location.pathname.split("/")[2] - 1;
-  if (path > blogs.length || path < 0) {
-    window.close();
+  const [blogData, setBlogData] = useState([]);
+  useEffect(() => {
+    const encodedData = new URLSearchParams(window.location.search).get("data");
+    if (encodedData) {
+      try {
+        const decodedData = JSON.parse(decodeURIComponent(encodedData));
+        setBlogData(decodedData);
+        console.log(decodedData);
+      } catch (e) {
+        console.log("Error decoding blog data: ", e);
+      }
+    }
+  }, []);
+
+  if(!blogData) {
+    return <p>Loading...</p>
   }
+
   return (
     <div className="blog-info-container">
       <div>
-        <h1>{blogs[path].blog_title}</h1>
-        <img src={"/profile.svg"} alt="profile" height={250} />
+        <h1>{blogData && blogData.title}</h1>
+        <img src={blogData && blogData.cover_image} alt="profile" height={150} />
       </div>
       <div>
-        <p>{blogs[path].blog_content}</p>
+        <p>{blogData && blogData.content}</p>
       </div>
     </div>
   );
