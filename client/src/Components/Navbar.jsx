@@ -1,22 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../reducers/userSlice";
 
 const Navbar = () => {
-  const activeUser = useSelector((state) => state);
-  console.log(activeUser);
-  const isAuthenticated = true;
+  const activeUser = useSelector((state) => state.user.userInfo);
+  const isAuthenticated = activeUser !== null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [activeComponent, setActiveComponent] = useState(
     document.querySelectorAll(".nav-comp")[0]
   );
-
-  useEffect(() => {
-    console.log(activeComponent);
-  }, [activeComponent]);
 
   const handleElementChange = (e, componentName) => {
     setActiveComponent(e.target);
@@ -97,7 +92,10 @@ const Navbar = () => {
             Logout
           </button>
         ) : (
-          <button className="login button" onClick={() => alert()}>
+          <button
+            className="login button"
+            onClick={() => navigate("/users/login", { replace: true })}
+          >
             Login
           </button>
         )}

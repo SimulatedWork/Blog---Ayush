@@ -2,8 +2,6 @@ import "../css/Blog.css";
 import { useEffect, useState } from "react";
 
 const Blog = (blog) => {
-  // const blog = blog.blog
-  console.log(blog.blog);
   const [relativeTime, setRelativeTime] = useState("");
   useEffect(() => {
     const currentTime = new Date().getTime();

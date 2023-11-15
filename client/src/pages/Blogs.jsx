@@ -1,30 +1,27 @@
+import { useDispatch, useSelector } from "react-redux";
 import Blog from "../Components/Blog";
 import Navbar from "../Components/Navbar";
 import "../css/Blogs.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { fetchBlog } from "../reducers/blogSlice";
 
 const Blogs = () => {
-  const [blogs, setBlogs] = useState([]);
+  const dispatch = useDispatch();
+  const blogs = useSelector((state) => state.blog.blogs);
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/blogs")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setBlogs(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    if (!blogs.length) {
+      dispatch(fetchBlog());
+    }
+  }, [blogs, dispatch]);
   return (
     <>
       <Navbar />
       <div className="blog-head-container">
-        {blogs && !blogs.error && blogs.map((blog_item) => {
-          return <Blog blog={blog_item} key={blog_item._id} />;
-        })}
+        {blogs &&
+          !blogs.error &&
+          blogs.map((blog_item) => {
+            return <Blog blog={blog_item} key={blog_item._id} />;
+          })}
       </div>
     </>
   );

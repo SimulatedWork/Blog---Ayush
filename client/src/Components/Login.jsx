@@ -10,7 +10,7 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const activeUser = useSelector((state) => state);
+  const activeUser = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
   console.log(activeUser);
   const handleFormSubmit = async (e) => {
@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (activeUser?.userInfo) {
+    if (activeUser) {
       navigate("/", { replace: true });
     }
   }, [activeUser, navigate]);

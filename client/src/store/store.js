@@ -1,7 +1,8 @@
 // src/store/store.js
 
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "../reducers/userSlice";
+import blogReducer from "../reducers/blogSlice";
 
 // Load state from localStorage
 const loadState = () => {
@@ -27,8 +28,13 @@ const saveState = (state) => {
   }
 };
 
+const rootReducer = combineReducers({
+  user: userReducer,
+  blog: blogReducer,
+});
+
 const store = configureStore({
-  reducer: userReducer,
+  reducer: rootReducer,
   preloadedState: loadState(),
 });
 
