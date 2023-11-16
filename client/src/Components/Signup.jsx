@@ -5,7 +5,7 @@ import { setError, setUser } from "../reducers/userSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const activeUser = useSelector((state) => state);
+  const activeUser = useSelector((state) => state.user.userInfo);
   console.log(activeUser);
   const navigate = useNavigate();
   const [cred, setCred] = useState({
@@ -37,7 +37,7 @@ const Signup = () => {
       });
   };
   useEffect(() => {
-    if (activeUser?.userInfo) {
+    if (activeUser) {
       navigate("/", { replace: true });
     }
   }, [activeUser, navigate]);

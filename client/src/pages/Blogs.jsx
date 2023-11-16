@@ -9,9 +9,7 @@ const Blogs = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blog.blogs);
   useEffect(() => {
-    if (!blogs.length) {
-      dispatch(fetchBlog());
-    }
+    dispatch(fetchBlog());
   }, [blogs, dispatch]);
   return (
     <>
@@ -20,7 +18,7 @@ const Blogs = () => {
         {blogs &&
           !blogs.error &&
           blogs.map((blog_item) => {
-            return <Blog blog={blog_item} key={blog_item._id} />;
+            return <Blog blog={blog_item} key={blog_item?._id} />;
           })}
       </div>
     </>
