@@ -7,7 +7,7 @@ const authenticateToken = require("../middlewares/Authorization");
 //getting all the blogs
 blogRouter.get("/", async (req, resp) => {
   try {
-    const blogs = await Blog.find({});
+    const blogs = await Blog.find().populate("author_id");
     resp.status(201).json(blogs);
   } catch (e) {
     resp.status(500).json({ error: e.message });

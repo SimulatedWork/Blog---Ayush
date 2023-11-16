@@ -29,13 +29,17 @@ userRouter.post("/signup", async (req, resp) => {
   try {
     const getUser = await User.findOne({ email });
     if (getUser) {
-      resp.status(400).json({ error: "Email already exists. Please Login." });
+      return resp
+        .status(400)
+        .json({ error: "Email already exists. Please Login." });
     }
+
     if (!name || !email || !password) {
       return resp
         .status(400)
         .json({ error: "Please provide name, email, and password." });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       name,
@@ -43,10 +47,15 @@ userRouter.post("/signup", async (req, resp) => {
       password: hashedPassword,
       profile: profile[Math.floor(Math.random() * profile.length)],
     });
+
     await user.save();
+
     const token = signToken({ email, password });
+
+    // Send headers and response together
     resp.status(201).json({ ...user._doc, token });
   } catch (error) {
+    // Handle unexpected errors
     resp.status(400).json({ error: error.message });
   }
 });
@@ -57,22 +66,19 @@ userRouter.post("/login", async (req, resp) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      resp.status(400).json({ error: "Please check your email." });
+      return resp.status(400).json({ error: "Please check your email." });
     }
-    bcrypt.compare(password, user.password, (err, res) => {
-      if (err) {
-        resp.status(500).json({ error: "Something went wrong!" });
-      }
 
-      if (res) {
-        const token = signToken({ email, password });
-        resp.status(201).json({ ...user._doc, token });
-      } else {
-        resp.status(501).json({ error: "Password is incorrect." });
-      }
-    });
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      const token = signToken({ email, password });
+      return resp.status(201).json({ ...user._doc, token });
+    } else {
+      return resp.status(401).json({ error: "Password is incorrect." });
+    }
   } catch (error) {
-    resp.status(500).json({ e: error.message });
+    return resp.status(500).json({ error: error.message });
   }
 });
 
