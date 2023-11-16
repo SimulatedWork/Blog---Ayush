@@ -68,7 +68,7 @@ const UploadBlog = () => {
                 placeholder="Title for your blog post:"
                 value={newBlog.title}
                 onChange={(e) =>
-                  setNewBlog({ ...newBlog, title: e.target.value.trim() })
+                  setNewBlog({ ...newBlog, title: e.target.value })
                 }
               />
               <div>
