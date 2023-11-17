@@ -1,14 +1,12 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import "../css/Card.css";
-import { useSelector } from "react-redux";
-import { CiLocationArrow1 } from "react-icons/ci";
-const Card = () => {
-  const blog = useSelector((state) => state.blog.blogs);
-  const blogNow = blog[0];
+
+const Card = ({ blog }) => {
   const [relativeTime, setRelativeTime] = useState("");
   useEffect(() => {
     const currentTime = new Date().getTime();
-    const postTime = new Date(blogNow.created_at).getTime();
+    const postTime = new Date(blog?.created_at).getTime();
     const difference = currentTime - postTime;
 
     const seconds = Math.floor(difference / 1000);
@@ -31,31 +29,36 @@ const Card = () => {
     } else {
       setRelativeTime(`${seconds} ${seconds === 1 ? "sec" : "secs"} ago`);
     }
-  }, [blogNow]);
+  }, [blog]);
   return (
     <div className="blog-card-container">
       <div className="blog-image">
         <img
-          src="https://res.cloudinary.com/dcj2allfp/image/upload/v1700204949/weq0aqjepjg1xkegwnrx.jpg"
+          src={blog?.cover_image}
           alt="cover-image"
           className="cover-image"
         />
       </div>
       <div className="blogInfo">
         <img
-          src={blogNow.author_id.profile}
+          src={blog?.author_id?.profile}
           alt="profile"
           className="user-profile"
           height={56}
         />
-        <p className="authorName">{blogNow.author_id.name}</p>
-        <p className="blogTitle">{blogNow.title}</p>
+        <p className="authorName">{blog?.author_id?.name}</p>
+        <p className="blogTitle">{blog?.title}</p>
         <p className="blogContentDisplay">{relativeTime}</p>
       </div>
       <div className="buttonContainer">
-        <button>
-          <CiLocationArrow1 size={24} />
-        </button>
+        <span
+          onClick={() => {
+            const blogData = encodeURIComponent(JSON.stringify(blog));
+            window.open(`/blog/${blog?._id}?data=${blogData}`);
+          }}
+        >
+          Read more...
+        </span>
       </div>
     </div>
   );

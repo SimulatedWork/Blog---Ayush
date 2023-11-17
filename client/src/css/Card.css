@@ -46,18 +46,15 @@
   gap: 2vh;
 }
 
-.buttonContainer button {
-  height: 5vh;
-  width: 5vh;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.buttonContainer span {
+  text-decoration: underline;
   cursor: pointer;
-  border: 2px dashed darkblue;
-  transition: all .1s;
 }
 
-.buttonContainer button:active {
-    transform: translate3d(1px, 2px ,2px);
+.buttonContainer span:hover {
+  color: blue;
+}
+
+.buttonContainer span:visited {
+  color: darkblue;
 }

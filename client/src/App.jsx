@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import BlogInfo from "./Components/BlogInfo";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
+import Card from "./Components/Card";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Blogs />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/upload" element={<UploadBlog />} />
+        <Route path="/card" element={<Card />} />
         <Route path="/users/login" element={<Login />} />
         <Route path="/users/signup" element={<Signup />} />
         <Route path="/blog/:id" element={<BlogInfo />} />

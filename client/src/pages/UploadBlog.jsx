@@ -1,7 +1,6 @@
 import { AiFillFolder } from "react-icons/ai";
 import "../css/UploadBlogs.css";
 import { useState } from "react";
-import Navbar from "../Components/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlog, postBlog } from "../reducers/blogSlice";
 
@@ -12,8 +11,7 @@ const UploadBlog = () => {
   console.log(blogState);
   const [newBlog, setNewBlog] = useState({
     title: "",
-    cover_image:
-      "https://res.cloudinary.com/dcj2allfp/image/upload/v1700111389/ulzpu0vbc32znpxdajtd.jpg",
+    cover_image: "",
     content: "",
     author_id: activeUser?._id,
   });
@@ -53,7 +51,6 @@ const UploadBlog = () => {
 
   return (
     <>
-      <Navbar />
       {isAuthenticated ? (
         <>
           <h1 style={{ textAlign: "center" }} className="BlogPostingHead">

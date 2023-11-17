@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setError, setUser } from "../reducers/userSlice";
+import "../css/Login.css";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const Signup = () => {
     }
   }, [activeUser, navigate]);
   return (
-    <div className="container">
+    <div className="login-container">
       <h2>Bloggery</h2>
       <h3>Login</h3>
       <form onSubmit={handleFormSubmit}>
