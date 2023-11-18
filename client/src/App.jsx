@@ -7,12 +7,14 @@ import BlogInfo from "./Components/BlogInfo";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Card from "./Components/Card";
+import Navbar from "./Components/Navbar";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Blogs />} />
+        <Route path="/nav" element={<Navbar />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/upload" element={<UploadBlog />} />
         <Route path="/card" element={<Card />} />
