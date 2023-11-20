@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setError, setUser } from "../reducers/userSlice";
+import "../css/Login.css";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const activeUser = useSelector((state) => state);
+  const activeUser = useSelector((state) => state.user.userInfo);
   console.log(activeUser);
   const navigate = useNavigate();
   const [cred, setCred] = useState({
@@ -37,12 +38,12 @@ const Signup = () => {
       });
   };
   useEffect(() => {
-    if (activeUser?.userInfo) {
+    if (activeUser) {
       navigate("/", { replace: true });
     }
   }, [activeUser, navigate]);
   return (
-    <div className="container">
+    <div className="login-container">
       <h2>Bloggery</h2>
       <h3>Login</h3>
       <form onSubmit={handleFormSubmit}>

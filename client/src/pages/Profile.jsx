@@ -1,50 +1,40 @@
+import Card from "../Components/Card";
 import "../css/Profile.css";
-import { AiOutlineMail } from "react-icons/ai";
-import { BsInstagram } from "react-icons/bs";
-import blogs from "../testing_data/blogs.json";
-import Blog from "../Components/Blog";
-import Navbar from "../Components/Navbar";
+// import { AiOutlineMail } from "react-icons/ai";
+// import { BsInstagram } from "react-icons/bs";
+import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const isAuthenticated = true;
-  const user_blogs = blogs.filter((blog) => {
-    return blog?.email === "ayush41red@gmail.com";
+  const activeUser = useSelector((state) => state.user.userInfo);
+  const blogs = useSelector((state) => state.blog.blogs);
+  const userBlogs = blogs.filter((blog) => {
+    return blog.author_id.email == activeUser?.email;
   });
+  const isAuthenticated = activeUser !== null;
   return (
     <>
-      <Navbar />
       {isAuthenticated ? (
-        <div className="profileContainer">
-          <div className="userDetails">
-            <div className="user-image-name">
-              <img src={"none.png"} alt="user_img" />
-              <h1>{"Ayush Shrivastav"}</h1>
-            </div>
-            <div className="social-info">
-              <span>
-                <AiOutlineMail />
-                {"ayush41red@gmail.com"}
-              </span>
-              <span>
-                <BsInstagram />
-                @ay.ush60_41
-              </span>
+        <>
+          <div className="userInfo-container">
+            <img
+              src="/man.png"
+              alt="profile-image"
+              className="userProfile-image"
+            />
+            <div className="userInfo">
+              <span>Ayush Shrivastav</span>
+              <span>ayush41red@gmail.com</span>
             </div>
           </div>
-          <div className="user-blogs">
-            {user_blogs.map((blog_item) => {
-              return <Blog key={blog_item.email} blog={blog_item} />;
+          <div className="blog-grid-container">
+            {userBlogs.map((blog) => {
+              return <Card key={blog._id} blog={blog} />;
             })}
           </div>
-        </div>
+        </>
       ) : (
-        <div className="container">
-          <img src={"/profile.svg"} alt="profile" height={300} />
-          <p className="info">You are logged out</p>
-          <button className="login-button" onClick={() => alert()}>
-            Login
-          </button>
-        </div>
+        <div className="container">Logged Out</div>
       )}
     </>
   );

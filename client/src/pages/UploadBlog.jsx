@@ -1,46 +1,25 @@
 import { AiFillFolder } from "react-icons/ai";
 import "../css/UploadBlogs.css";
-import data from "../testing_data/category.json";
 import { useState } from "react";
-import Navbar from "../Components/Navbar";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchBlog, postBlog } from "../reducers/blogSlice";
 
 const UploadBlog = () => {
+  const dispatch = useDispatch();
+  const activeUser = useSelector((state) => state.user.userInfo);
+  const blogState = useSelector((state) => state.blog);
+  console.log(blogState);
   const [newBlog, setNewBlog] = useState({
     title: "",
-    categories: [],
-    image: "",
+    cover_image: "",
     content: "",
+    author_id: activeUser?._id,
   });
-  const [category, setCategory] = useState(data);
-  const [newCategory, setNewCategory] = useState("");
-  const isAuthenticated = true;
-  const handleCategoryClick = (e, name) => {
-    if (newBlog.categories.includes(name)) {
-      const updatedCategories = newBlog.categories.filter(
-        (category) => category !== name
-      );
-      setNewBlog({ ...newBlog, categories: updatedCategories });
-      e.target.style.backgroundColor = "#ffffff";
-    } else {
-      const updatedCategories = [...newBlog.categories, name];
-      setNewBlog({ ...newBlog, categories: updatedCategories });
-      e.target.style.backgroundColor = "#5effc5";
-    }
+  const handlePostingBlog = async () => {
+    dispatch(postBlog(newBlog));
+    dispatch(fetchBlog());
   };
-  const handleCategoryAddititon = (event) => {
-    if (event.keyCode == 13 && newCategory.trim() != "") {
-      event.target.value = "";
-      console.log("Enter key pressed");
-      setNewBlog({
-        ...newBlog,
-        categories: [...newBlog.categories, newCategory],
-      });
-      setCategory([
-        ...category,
-        { id: category.length + 1, name: newCategory },
-      ]);
-    }
-  };
+  const isAuthenticated = activeUser !== null;
   const handleImageInput = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -72,7 +51,6 @@ const UploadBlog = () => {
 
   return (
     <>
-      <Navbar />
       {isAuthenticated ? (
         <>
           <h1 style={{ textAlign: "center" }} className="BlogPostingHead">
@@ -91,77 +69,52 @@ const UploadBlog = () => {
                 }
               />
               <div>
-                <input
-                  type="text"
-                  className="BlogCategory"
-                  placeholder="Add a new category"
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value)}
-                  onKeyDown={handleCategoryAddititon}
-                />
-                <p className="addCategoryDirections">
-                  Write the category name and press enter.
-                </p>
-              </div>
-
-              <div className="categories">
-                {category.map((categories) => {
-                  return (
-                    <div
-                      className="category"
-                      key={categories.id}
-                      onClick={(e) => handleCategoryClick(e, categories.name)}
-                    >
-                      {categories.name}
-                    </div>
-                  );
-                })}
-              </div>
-              <div
-                className="BlogCoverImage"
-                onClick={() => document.querySelector("#postImage").click()}
-              >
-                <p>Choose a cover image for your blog</p>
-                <AiFillFolder />
-              </div>
-              {newBlog.image === "" ? (
-                ""
-              ) : (
-                <a
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  href={newBlog.image}
-                  target="_blank"
-                  rel="noreferrer noopener"
+                <div
+                  className="BlogCoverImage"
+                  onClick={() => document.querySelector("#postImage").click()}
                 >
-                  Selected Image
-                </a>
-              )}
-              <input
-                type="file"
-                style={{ display: "none" }}
-                id="postImage"
-                accept="image/*"
-                onInput={(e) => handleImageInput(e)}
-              />
-              <button
-                className="BlogPostingPublishButton"
-                onClick={() => console.log(newBlog)}
-              >
-                Publish
-              </button>
-            </div>
-            <div className="BlogPostingContentContainer">
-              <textarea
-                name="content"
-                className="blogContent"
-                placeholder="Your content goes here..."
-                value={newBlog.content}
-                onChange={(e) =>
-                  setNewBlog({ ...newBlog, content: e.target.value })
-                }
-              />
+                  <p>Choose a cover image for your blog</p>
+                  <AiFillFolder />
+                </div>
+                {newBlog.image === "" ? (
+                  ""
+                ) : (
+                  <a
+                    style={{
+                      textDecoration: "none",
+                    }}
+                    href={newBlog.image}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Selected Image
+                  </a>
+                )}
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  id="postImage"
+                  accept="image/*"
+                  onInput={(e) => handleImageInput(e)}
+                />
+                <button
+                  className="BlogPostingPublishButton"
+                  onClick={handlePostingBlog}
+                >
+                  Publish
+                </button>
+              </div>
+              <div className="BlogPostingContentContainer">
+                <textarea
+                  name="content"
+                  className="blogContent"
+                  placeholder="Your content goes here..."
+                  value={newBlog.content}
+                  onChange={(e) =>
+                    setNewBlog({ ...newBlog, content: e.target.value })
+                  }
+                />
+              </div>
             </div>
           </div>
         </>

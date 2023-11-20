@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setError, setUser } from "../reducers/userSlice";
+import "../css/Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const activeUser = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
-  console.log(activeUser);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -25,11 +25,6 @@ const Login = () => {
         },
         body: JSON.stringify(credential),
       });
-
-      // if (!response.ok) {
-      //   throw new Error("Login failed");
-      // }
-
       const data = await response.json();
       if (data.error) {
         dispatch(setError(data.error));
@@ -50,7 +45,7 @@ const Login = () => {
   }, [activeUser, navigate]);
 
   return (
-    <div className="container">
+    <div className="login-container">
       <h2>Bloggery</h2>
       <h3>Login</h3>
       <form onSubmit={handleFormSubmit}>

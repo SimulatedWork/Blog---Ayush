@@ -1,13 +1,45 @@
-:root {
-  --primary: #5effc5;
-  --secondary: #000000;
+/* body {
+  background-color: #141019;
+  background: radial-gradient(at 50% -20%, #908392, #0d060e) fixed;
+} */
+
+.page-container {
+  margin: 8% auto;
+  height: 56vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
 }
 
-.container h1 {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+.page-container h1 {
+  font-size: 8vh;
+  color: rgb(255, 178, 78);
 }
 
-.container h1 span {
-  color: var(--primary);
-  -webkit-text-stroke: var(--secondary) 1.25px;
+.page-container p {
+  font-size: 2rem;
+  color: rgb(180, 160, 136);
+}
+
+.page-container button {
+  height: 8vh;
+  width: 10%;
+  font-size: large;
+  font-weight: bold;
+  border-radius: 10vh;
+  border: none;
+  outline: none;
+  background-color: burlywood;
+}
+
+.page-container button:hover {
+  cursor: pointer;
+  background-color: rgb(215, 193, 163);
+}
+
+@media screen and (max-width: 768px) {
+
 }

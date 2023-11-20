@@ -1,0 +1,60 @@
+.blog-card-container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 32vh;
+  height: 56vh;
+  padding-bottom: 2vh;
+  border: lightblue 1px dashed;
+}
+
+.cover-image {
+  height: 24vh;
+  width: 100%;
+}
+
+.blogInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2vh;
+}
+
+.user-profile {
+  border-radius: 20vh;
+  border: 1px solid darkblue;
+}
+
+.authorName {
+  color: gray;
+}
+
+.blogTitle {
+  color: darkblue;
+  font-weight: bolder;
+  font-size: 1.2rem;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 2vh;
+}
+
+.buttonContainer span {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.buttonContainer span:hover {
+  color: blue;
+}
+
+.buttonContainer span:visited {
+  color: darkblue;
+}
