@@ -8,8 +8,6 @@ import Navbar from "../Components/Navbar";
 const UploadBlog = () => {
   const dispatch = useDispatch();
   const activeUser = useSelector((state) => state.user.userInfo);
-  const blogState = useSelector((state) => state.blog);
-  console.log(blogState);
   const [newBlog, setNewBlog] = useState({
     title: "",
     cover_image: "",

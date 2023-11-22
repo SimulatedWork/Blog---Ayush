@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setError, setUser } from "../reducers/userSlice";
 import "../css/Login.css";
+import { Alert, Button, Typography } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,12 +13,12 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setOnScreenError] = useState(null);
   const activeUser = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const response = await fetch("http://localhost:8000/api/v1/users/login", {
         method: "POST",
@@ -27,12 +29,14 @@ const Login = () => {
       });
       const data = await response.json();
       if (data.error) {
+        setOnScreenError(data.error);
         dispatch(setError(data.error));
       } else {
+        setOnScreenError(null);
         dispatch(setUser(data));
       }
     } catch (err) {
-      console.log(err);
+      console.log("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -45,20 +49,29 @@ const Login = () => {
   }, [activeUser, navigate]);
 
   return (
-    <div className="login-container">
-      <h2>Bloggery</h2>
-      <h3>Login</h3>
-      <form onSubmit={handleFormSubmit}>
-        <input
+    <div
+      style={{
+        height: "100vh",
+        width: "100%",
+        display: "grid",
+        placeItems: "center",
+      }}
+    >
+      <div className="login-container">
+        <Typography variant="h5">Bloggery</Typography>
+        <Typography variant="p">Login</Typography>
+        <TextField
+          variant="outlined"
           type="text"
           required
           value={credential.email}
           onChange={(e) =>
             setCredential({ ...credential, email: e.target.value })
           }
-          disabled={loading}
+          label="Email"
+          placeholder="Email"
         />
-        <input
+        <TextField
           type="password"
           required
           value={credential.password}
@@ -66,14 +79,23 @@ const Login = () => {
             setCredential({ ...credential, password: e.target.value })
           }
           disabled={loading}
+          label="Password"
         />
-        <button type="submit" disabled={loading}>
+        <Button
+          variant="contained"
+          disabled={loading}
+          onClick={handleFormSubmit}
+        >
           {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      <button onClick={() => navigate("/users/signup", { replace: true })}>
-        Sign up
-      </button>
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => navigate("/users/signup", { replace: true })}
+        >
+          Sign up
+        </Button>
+        {error && <Alert severity="error">{error}</Alert>}
+      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   width: 32vh;
-  height: 56vh;
+  height: auto;
   padding-bottom: 2vh;
   border: lightblue 1px dashed;
 }
