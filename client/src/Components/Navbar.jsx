@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearUser } from "../reducers/userSlice";
 import { useState } from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,6 +29,23 @@ const Navbar = () => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
+      {activeUser && (
+        <Box
+          sx={{
+            backgroundColor: "aliceblue",
+            height: "16vh",
+            textAlign: "left",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "5vh",
+            color: "darkcyan"
+          }}
+        >
+          <Typography>{activeUser.email}</Typography>
+          <Typography>{activeUser.name}</Typography>
+        </Box>
+      )}
       <List style={{ padding: "0 5%" }}>
         {activeUser && (
           <ListItem onClick={() => dispatch(clearUser())}>

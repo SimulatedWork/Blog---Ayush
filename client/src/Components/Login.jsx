@@ -5,6 +5,7 @@ import { setError, setUser } from "../reducers/userSlice";
 import "../css/Login.css";
 import { Alert, Button, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { ColorRing } from "react-loader-spinner";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,6 +30,9 @@ const Login = () => {
       });
       const data = await response.json();
       if (data.error) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
         setOnScreenError(data.error);
         dispatch(setError(data.error));
       } else {
@@ -37,14 +41,15 @@ const Login = () => {
       }
     } catch (err) {
       console.log("Something went wrong.");
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (activeUser) {
-      navigate("/", { replace: true });
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/", { replace: true });
+      }, 2000);
     }
   }, [activeUser, navigate]);
 
@@ -69,6 +74,7 @@ const Login = () => {
             setCredential({ ...credential, email: e.target.value })
           }
           label="Email"
+          disabled={loading}
           placeholder="Email"
         />
         <TextField
@@ -86,10 +92,23 @@ const Login = () => {
           disabled={loading}
           onClick={handleFormSubmit}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? (
+            <ColorRing
+              visible={true}
+              height="40"
+              width="40"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={["#f0f8ff", "#f0f8ff", "#f0f8ff", "#f0f8ff", "#f0f8ff"]}
+            />
+          ) : (
+            "Login"
+          )}
         </Button>
         <Button
           variant="outlined"
+          disabled={loading}
           onClick={() => navigate("/users/signup", { replace: true })}
         >
           Sign up

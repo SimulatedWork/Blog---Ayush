@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlog, postBlog } from "../reducers/blogSlice";
 import Navbar from "../Components/Navbar";
+import { Alert, Box, Paper, Typography } from "@mui/material";
 
 const UploadBlog = () => {
   const dispatch = useDispatch();
@@ -119,15 +120,34 @@ const UploadBlog = () => {
           </div>
         </>
       ) : (
-        <div className="loginContainer">
-          <img src={"/login.svg"} alt="login" height={350} />
-          <h1>
-            You are logged out, Login to post blogs to <strong>Bloggery</strong>
-          </h1>
-          <button onClick={() => alert()}>Login</button>
-        </div>
+        <Box
+          sx={{
+            height: "100vh",
+            width: "auto",
+            margin: "0 5vh",
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
+          <Paper
+            sx={{
+              backgroundColor: "lightcyan",
+              padding: "5vh",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "2vh",
+            }}
+          >
+            <Alert severity="warning">You are Logged Out!</Alert>
+            <Typography variant="h7">
+              Please login to <strong>Bloggery</strong> to upload blogs
+            </Typography>
+          </Paper>
+        </Box>
       )}
-      ;
     </>
   );
 };
