@@ -12,6 +12,7 @@
 .userInfo-container {
   background-color: whitesmoke;
   padding: 20px;
+  margin-top: 9vh;
   display: flex;
   align-items: center;
   justify-content: center;

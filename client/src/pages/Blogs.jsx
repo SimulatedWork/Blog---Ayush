@@ -3,6 +3,7 @@ import "../css/Blogs.css";
 import Card from "../Components/Card";
 import { useEffect } from "react";
 import { fetchBlog } from "../reducers/blogSlice";
+import Navbar from "../Components/Navbar";
 
 const Blogs = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Blogs = () => {
   }, [blogs, dispatch]);
   return (
     <>
+      <Navbar />
       <div className="blog-head-container">
         {blogs &&
           !blogs.error &&

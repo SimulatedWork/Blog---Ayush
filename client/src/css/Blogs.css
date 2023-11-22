@@ -14,10 +14,11 @@
 }
 
 .blog-head-container {
-    padding: 5vh;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly; 
-    gap: 10vh;
+  padding: 4vh;
+  padding-top: 16vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 10vh;
 }

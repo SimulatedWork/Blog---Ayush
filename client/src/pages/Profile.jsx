@@ -1,4 +1,5 @@
 import Card from "../Components/Card";
+import Navbar from "../Components/Navbar";
 import "../css/Profile.css";
 // import { AiOutlineMail } from "react-icons/ai";
 // import { BsInstagram } from "react-icons/bs";
@@ -14,6 +15,7 @@ const Profile = () => {
   const isAuthenticated = activeUser !== null;
   return (
     <>
+      <Navbar />
       {isAuthenticated ? (
         <>
           <div className="userInfo-container">

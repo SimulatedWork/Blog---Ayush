@@ -3,6 +3,7 @@ import "../css/UploadBlogs.css";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlog, postBlog } from "../reducers/blogSlice";
+import Navbar from "../Components/Navbar";
 
 const UploadBlog = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const UploadBlog = () => {
 
   return (
     <>
+      <Navbar />
       {isAuthenticated ? (
         <>
           <h1 style={{ textAlign: "center" }} className="BlogPostingHead">
