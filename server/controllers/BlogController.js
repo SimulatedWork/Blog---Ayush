@@ -94,4 +94,17 @@ blogRouter.post("/like/:blogId/:userId", async (req, resp) => {
   }
 });
 
+blogRouter.delete("/delete/:_id", authenticateToken, async (req, resp) => {
+  const { _id } = req.params;
+  try {
+    const blog = await Blog.findByIdAndDelete(_id);
+    if (!blog) {
+      return resp.status(401).json({ error: "No such blogs." });
+    }
+    resp.status(200).json({ message: "Deleted Blog Succesfully." });
+  } catch (e) {
+    resp.status(401).json({ error: e.message });
+  }
+});
+
 module.exports = blogRouter;

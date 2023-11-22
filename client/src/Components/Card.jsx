@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import "../css/Card.css";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({ blog }) => {
   const [relativeTime, setRelativeTime] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
     const currentTime = new Date().getTime();
     const postTime = new Date(blog?.created_at).getTime();
@@ -53,7 +55,7 @@ const Card = ({ blog }) => {
       <div className="buttonContainer">
         <span
           onClick={() => {
-            window.open(`/blog/${blog?._id}`);
+            navigate(`/blog/${blog?._id}`);
           }}
         >
           Read more...

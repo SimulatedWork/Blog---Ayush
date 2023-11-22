@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Fab, Paper, Stack, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { fetchBlog, likeBlog } from "../reducers/blogSlice";
-import { useLocation } from "react-router-dom";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { deleteBlog, fetchBlog, likeBlog } from "../reducers/blogSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import ConfirmationModal from "./ConfirmationModel";
 const BlogInfo = () => {
   const activeUser = useSelector((state) => state.user.userInfo);
   const blogs = useSelector((state) => state.blog.blogs);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [blogData, setBlogData] = useState(null);
   const [relativeTime, setRelativeTime] = useState("");
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const param = useLocation();
   const blog_id = param.pathname.split("/")[2];
   const handleLikeFunctionality = (id) => {
@@ -45,11 +49,30 @@ const BlogInfo = () => {
     }
   }, [blogData, blog_id, blogs]);
 
+  const handleBlogDeletion = (blogId) => {
+    dispatch(deleteBlog(blogId)).then(() => {
+      navigate("/");
+    });
+    dispatch(fetchBlog());
+    setIsConfirmationOpen(false);
+  };
+
   if (!blogData) {
     return <>Loading...</>;
   }
   return (
     <Paper sx={{ minHeight: "100vh", backgroundColor: "aliceblue" }}>
+      <Fab
+        sx={{
+          position: "absolute",
+          height: "5vh",
+          width: "5vh",
+          margin: "2vh",
+        }}
+        onClick={() => navigate(-1)}
+      >
+        <ArrowBackIosNewIcon />
+      </Fab>
       <img className="cover-image" src={blogData?.cover_image} />
       <Box
         sx={{
@@ -68,13 +91,21 @@ const BlogInfo = () => {
             <Typography>{blogData?.likes.length}</Typography>
           </Fab>
           {activeUser && activeUser.email === blogData?.author_id.email && (
-            <Fab aria-label="delete">
+            <Fab
+              aria-label="delete"
+              onClick={() => setIsConfirmationOpen(true)}
+            >
               <DeleteForeverIcon />
             </Fab>
           )}
         </Stack>
         <Typography variant="p">{blogData?.content}</Typography>
       </Box>
+      <ConfirmationModal
+        open={isConfirmationOpen}
+        onClose={() => setIsConfirmationOpen(false)}
+        onConfirm={() => handleBlogDeletion(blogData._id)}
+      />
     </Paper>
   );
 };

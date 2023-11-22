@@ -42,6 +42,22 @@ export const likeBlog = createAsyncThunk(
   }
 );
 
+export const deleteBlog = createAsyncThunk(
+  "blogs/delete",
+  async (blogId, { getState }) => {
+    const token = getState().user.userInfo.token;
+    const response = await axios.delete(
+      `http://localhost:8000/api/v1/blogs/delete/${blogId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
 const blogSlice = createSlice({
   name: "blog",
   initialState: {
@@ -100,6 +116,20 @@ const blogSlice = createSlice({
     });
 
     builder.addCase(likeBlog.rejected, (state, action) => {
+      state.status = "rejected";
+      state.error = action.error.message;
+    });
+
+    builder.addCase(deleteBlog.pending, (state) => {
+      state.status = "Pending...";
+    });
+
+    builder.addCase(deleteBlog.fulfilled, (state, action) => {
+      state.blogs = state.blogs.filter((b) => b._id !== action.payload._id);
+      state.status = "fulfilled";
+    });
+
+    builder.addCase(deleteBlog.rejected, (state, action) => {
       state.status = "rejected";
       state.error = action.error.message;
     });
