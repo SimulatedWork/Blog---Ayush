@@ -53,8 +53,7 @@ const Card = ({ blog }) => {
       <div className="buttonContainer">
         <span
           onClick={() => {
-            const blogData = encodeURIComponent(JSON.stringify(blog));
-            window.open(`/blog/${blog?._id}?data=${blogData}`);
+            window.open(`/blog/${blog?._id}`);
           }}
         >
           Read more...

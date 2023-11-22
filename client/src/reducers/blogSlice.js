@@ -24,6 +24,24 @@ export const postBlog = createAsyncThunk(
   }
 );
 
+export const likeBlog = createAsyncThunk(
+  "blogs/likeBlog",
+  async (blogId, { getState }) => {
+    const token = getState().user.userInfo.token;
+    const userId = getState().user.userInfo._id;
+    const response = await axios.post(
+      `http://localhost:8000/api/v1/blogs/like/${blogId}/${userId}`,
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
 const blogSlice = createSlice({
   name: "blog",
   initialState: {
@@ -47,8 +65,7 @@ const blogSlice = createSlice({
       state.error = null;
     });
 
-    // eslint-disable-next-line no-unused-vars
-    builder.addCase(fetchBlog.pending, (state, action) => {
+    builder.addCase(fetchBlog.pending, (state) => {
       state.status = "pending...";
     });
 
@@ -66,9 +83,25 @@ const blogSlice = createSlice({
       (state.status = "rejected"), (state.error = action.error.message);
     });
 
-    // eslint-disable-next-line no-unused-vars
-    builder.addCase(postBlog.pending, (state, action) => {
+    builder.addCase(postBlog.pending, (state) => {
       state.status = "pending...";
+    });
+
+    builder.addCase(likeBlog.pending, (state) => {
+      state.status = "pending...";
+    });
+
+    builder.addCase(likeBlog.fulfilled, (state, action) => {
+      const updatedBlog = state.blogs.filter(
+        (blog) => blog._id !== action.payload._id
+      );
+      state.blogs = [...updatedBlog, action.payload];
+      state.error = null;
+    });
+
+    builder.addCase(likeBlog.rejected, (state, action) => {
+      state.status = "rejected";
+      state.error = action.error.message;
     });
   },
 });

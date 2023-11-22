@@ -78,7 +78,7 @@ blogRouter.put("/edit/:id", authenticateToken, async (req, resp) => {
 blogRouter.post("/like/:blogId/:userId", async (req, resp) => {
   const { blogId, userId } = req.params;
   try {
-    const blog = await Blog.findOne({ _id: blogId });
+    const blog = await Blog.findOne({ _id: blogId }).populate("author_id");
     if (!blog) {
       resp.status(400).json({ message: "No such blogs" });
     }
