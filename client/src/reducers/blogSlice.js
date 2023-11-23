@@ -9,6 +9,7 @@ export const fetchBlog = createAsyncThunk("blogs/fetchBlog", async () => {
 export const postBlog = createAsyncThunk(
   "blogs/postBlog",
   async (blogData, { getState }) => {
+    console.log(blogData);
     const token = getState().user.userInfo.token;
     const response = await axios.post(
       "http://localhost:8000/api/v1/blogs/post",
