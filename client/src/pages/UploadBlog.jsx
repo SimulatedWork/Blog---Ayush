@@ -235,19 +235,21 @@ const UploadBlog = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Fab
-        onClick={() => setOpenModal(true)}
-        sx={{
-          position: "fixed",
-          bottom: "4vh",
-          right: "4vh",
-          height: "12vh",
-          width: "12vh",
-          backgroundColor: "lightcyan",
-        }}
-      >
-        <UploadIcon sx={{ color: "darkblue", fontSize: "4vh" }} />
-      </Fab>
+      {activeUser && (
+        <Fab
+          onClick={() => setOpenModal(true)}
+          sx={{
+            position: "fixed",
+            bottom: "4vh",
+            right: "4vh",
+            height: "12vh",
+            width: "12vh",
+            backgroundColor: "lightcyan",
+          }}
+        >
+          <UploadIcon sx={{ color: "darkblue", fontSize: "4vh" }} />
+        </Fab>
+      )}
       <ConfirmUpload
         open={openModal}
         onClose={() => setOpenModal(false)}
