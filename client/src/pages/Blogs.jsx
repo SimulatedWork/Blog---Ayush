@@ -9,10 +9,8 @@ const Blogs = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blog.blogs);
   useEffect(() => {
-    if (!blogs.length) {
-      dispatch(fetchBlog());
-    }
-  }, [blogs, dispatch]);
+    dispatch(fetchBlog());
+  }, [dispatch]);
   return (
     <>
       <Navbar />

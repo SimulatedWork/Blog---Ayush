@@ -15,7 +15,7 @@
 
 .blog-info-container {
   width: 75%;
-  height: fit-content;
+  height: auto;
   border-radius: 5vh;
   margin: 5% auto;
   padding: 5vh;
@@ -30,17 +30,4 @@
 .cover-image {
   height: 40vh;
   width: 100%;
-}
-
-.blog-info-container div:nth-child(1) {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5vh;
-}
-
-.blog-info-container div:nth-child(2) {
-  width: max-content;
-  padding: 5vh;
 }

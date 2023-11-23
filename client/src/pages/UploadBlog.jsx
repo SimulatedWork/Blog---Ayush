@@ -9,6 +9,8 @@ import {
   Alert,
   Box,
   Button,
+  Backdrop,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -21,21 +23,27 @@ import {
 import ImageIcon from "@mui/icons-material/Image";
 import UploadIcon from "@mui/icons-material/Upload";
 import { TextareaAutosize } from "@mui/base/TextareaAutosize";
+import { useNavigate } from "react-router-dom";
 
 const UploadBlog = () => {
   const dispatch = useDispatch();
   const activeUser = useSelector((state) => state.user.userInfo);
-  const blog = useSelector((state) => state.blog.error);
-  console.log(blog);
+  const [backdropOpen, setBackdropOpen] = useState(false);
   const [newBlog, setNewBlog] = useState({
     title: "",
     cover_image: "",
     content: "",
     author_id: activeUser?._id,
   });
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const handlePostingBlog = async () => {
+    setBackdropOpen(true);
+    setTimeout(() => {
+      navigate("/", { replace: true });
+      setBackdropOpen(false);
+    }, 2000);
     dispatch(postBlog(newBlog));
     dispatch(fetchBlog());
     setOpenModal(false);
@@ -63,7 +71,6 @@ const UploadBlog = () => {
 
         const data = await response.json();
         const imageUrl = data.secure_url;
-        console.log(data);
         setNewBlog({ ...newBlog, cover_image: imageUrl });
       } catch (error) {
         console.error("Error uploading image to Cloudinary:", error);
@@ -246,6 +253,12 @@ const UploadBlog = () => {
         onClose={() => setOpenModal(false)}
         onConfirm={() => handlePostingBlog()}
       />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdropOpen}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 };

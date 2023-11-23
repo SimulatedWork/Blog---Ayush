@@ -76,10 +76,15 @@ const BlogInfo = () => {
       <img className="cover-image" src={blogData?.cover_image} />
       <Box
         sx={{
-          padding: "2vh 5vh",
+          padding: "2vh",
         }}
       >
-        <Typography variant="h3">{blogData?.title}</Typography>
+        <Typography
+          variant="h5"
+          sx={{ lineHeight: "5vh", letterSpacing: "1.6px" }}
+        >
+          {blogData?.title}
+        </Typography>
         <Typography variant="h6">{blogData?.author_id.name}</Typography>
         <Typography variant="h7">{relativeTime}</Typography>
         <Stack direction="row" spacing={5} marginTop={5} marginBottom={5}>
@@ -99,7 +104,12 @@ const BlogInfo = () => {
             </Fab>
           )}
         </Stack>
-        <Typography variant="p">{blogData?.content}</Typography>
+        <Typography
+          variant="p"
+          sx={{ lineHeight: "16px", letterSpacing: "1.2px" }}
+        >
+          {blogData?.content}
+        </Typography>
       </Box>
       <ConfirmationModal
         open={isConfirmationOpen}
