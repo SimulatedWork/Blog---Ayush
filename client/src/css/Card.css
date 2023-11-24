@@ -5,14 +5,15 @@
   align-items: center;
   justify-content: space-between;
   width: 32vh;
-  height: 56vh;
-  padding-bottom: 2vh;
-  border: lightblue 1px dashed;
+  min-height: 72vh;
+  padding: 2vh;
+  border: lightblue 1px solid;
+  border-radius: 5px;
+  box-shadow: 1px 2px 10px 5px #87777761;
 }
 
 .cover-image {
-  height: 24vh;
-  width: 100%;
+  max-height: 50vh;
 }
 
 .blogInfo {

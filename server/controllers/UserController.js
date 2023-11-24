@@ -65,6 +65,13 @@ userRouter.post("/login", async (req, resp) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
+
+    if (!email || !password) {
+      return resp
+        .status(400)
+        .json({ error: "Please provide email and password." });
+    }
+
     if (!user) {
       return resp.status(400).json({ error: "Please check your email." });
     }

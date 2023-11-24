@@ -1,9 +1,8 @@
+import { Alert, Paper, Typography } from "@mui/material";
 import Card from "../Components/Card";
+import Navbar from "../Components/Navbar";
 import "../css/Profile.css";
-// import { AiOutlineMail } from "react-icons/ai";
-// import { BsInstagram } from "react-icons/bs";
 import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const activeUser = useSelector((state) => state.user.userInfo);
@@ -14,27 +13,68 @@ const Profile = () => {
   const isAuthenticated = activeUser !== null;
   return (
     <>
+      <Navbar />
       {isAuthenticated ? (
         <>
           <div className="userInfo-container">
             <img
-              src="/man.png"
+              src={activeUser.profile}
               alt="profile-image"
               className="userProfile-image"
             />
             <div className="userInfo">
-              <span>Ayush Shrivastav</span>
-              <span>ayush41red@gmail.com</span>
+              <span>{activeUser.name}</span>
+              <span>{activeUser.email}</span>
             </div>
           </div>
           <div className="blog-grid-container">
-            {userBlogs.map((blog) => {
-              return <Card key={blog._id} blog={blog} />;
-            })}
+            {userBlogs.length !== 0 ? (
+              userBlogs.map((blog) => {
+                return <Card key={blog._id} blog={blog} />;
+              })
+            ) : (
+              <Paper
+                sx={{
+                  backgroundColor: "lightcyan",
+                  padding: "5vh",
+                  margin: "10vh 0",
+                }}
+              >
+                <Alert severity="info">
+                  Blogs that you upload will show up here.
+                </Alert>
+              </Paper>
+            )}
           </div>
         </>
       ) : (
-        <div className="container">Logged Out</div>
+        <Paper
+          sx={{
+            height: "100vh",
+            width: "100%",
+            display: "grid",
+            placeItems: "center",
+            padding: "5vh",
+          }}
+        >
+          <Paper
+            elevation={3}
+            sx={{
+              backgroundColor: "lightcyan",
+              padding: "5vh",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "2vh"
+            }}
+          >
+            <Alert severity="warning">You are logged out.</Alert>
+            <Typography>
+              Please login to <strong>Bloggery</strong> to view your profile.
+            </Typography>
+          </Paper>
+        </Paper>
       )}
     </>
   );

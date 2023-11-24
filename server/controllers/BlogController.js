@@ -78,7 +78,7 @@ blogRouter.put("/edit/:id", authenticateToken, async (req, resp) => {
 blogRouter.post("/like/:blogId/:userId", async (req, resp) => {
   const { blogId, userId } = req.params;
   try {
-    const blog = await Blog.findOne({ _id: blogId });
+    const blog = await Blog.findOne({ _id: blogId }).populate("author_id");
     if (!blog) {
       resp.status(400).json({ message: "No such blogs" });
     }
@@ -91,6 +91,19 @@ blogRouter.post("/like/:blogId/:userId", async (req, resp) => {
     resp.status(201).json(blog);
   } catch (e) {
     resp.status(500).json({ error: e.message });
+  }
+});
+
+blogRouter.delete("/delete/:_id", authenticateToken, async (req, resp) => {
+  const { _id } = req.params;
+  try {
+    const blog = await Blog.findByIdAndDelete(_id);
+    if (!blog) {
+      return resp.status(401).json({ error: "No such blogs." });
+    }
+    resp.status(200).json({ message: "Deleted Blog Succesfully." });
+  } catch (e) {
+    resp.status(401).json({ error: e.message });
   }
 });
 
