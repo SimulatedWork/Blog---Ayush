@@ -17,11 +17,14 @@ const Login = () => {
   const [error, setOnScreenError] = useState(null);
   const activeUser = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
+  const API_SERVER_SCHEME = import.meta.env.VITE_SERVER_SCHEME;
+  const API_SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
+  const API_SERVER = API_SERVER_SCHEME + "://" + API_SERVER_DOMAIN;
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/api/v1/users/login", {
+      const response = await fetch(`${API_SERVER}/api/v1/users/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

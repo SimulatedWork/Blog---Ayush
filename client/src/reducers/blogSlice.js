@@ -1,8 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API_SERVER_SCHEME = import.meta.env.VITE_SERVER_SCHEME;
+const API_SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
+const API_SERVER = API_SERVER_SCHEME + "://" + API_SERVER_DOMAIN;
+
 export const fetchBlog = createAsyncThunk("blogs/fetchBlog", async () => {
-  const response = await axios.get("http://localhost:8000/api/v1/blogs");
+  const response = await axios.get(`${API_SERVER}/api/v1/blogs`);
   return response.data;
 });
 
@@ -12,7 +16,7 @@ export const postBlog = createAsyncThunk(
     console.log(blogData);
     const token = getState().user.userInfo.token;
     const response = await axios.post(
-      "http://localhost:8000/api/v1/blogs/post",
+      `${API_SERVER}/api/v1/blogs/post`,
       blogData,
       {
         headers: {
@@ -31,7 +35,7 @@ export const likeBlog = createAsyncThunk(
     const token = getState().user.userInfo.token;
     const userId = getState().user.userInfo._id;
     const response = await axios.post(
-      `http://localhost:8000/api/v1/blogs/like/${blogId}/${userId}`,
+      `${API_SERVER}/api/v1/blogs/like/${blogId}/${userId}`,
       null,
       {
         headers: {
@@ -48,7 +52,7 @@ export const deleteBlog = createAsyncThunk(
   async (blogId, { getState }) => {
     const token = getState().user.userInfo.token;
     const response = await axios.delete(
-      `http://localhost:8000/api/v1/blogs/delete/${blogId}`,
+      `${API_SERVER}/api/v1/blogs/delete/${blogId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
