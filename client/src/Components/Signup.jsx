@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setError, setUser } from "../reducers/userSlice";
 import "../css/Login.css";
 import { Alert, Button, TextField, Typography } from "@mui/material";
+import { ColorRing } from "react-loader-spinner";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,14 @@ const Signup = () => {
     password: "",
   });
   const [error, setOnScreenError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const API_SERVER_SCHEME = import.meta.env.VITE_SERVER_SCHEME;
+  const API_SERVER_DOMAIN = import.meta.env.VITE_SERVER_DOMAIN;
+  const API_SERVER = API_SERVER_SCHEME + "://" + API_SERVER_DOMAIN;
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:8000/api/v1/users/signup", {
+    setLoading(true);
+    await fetch(`${API_SERVER}/api/v1/users/signup`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -30,6 +36,7 @@ const Signup = () => {
       .then((data) => {
         if (data.error) {
           setOnScreenError(data.error);
+          setLoading(false);
           dispatch(setError(data.error));
         } else {
           dispatch(setUser(data));
@@ -41,7 +48,10 @@ const Signup = () => {
   };
   useEffect(() => {
     if (activeUser) {
-      navigate("/", { replace: true });
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/", { replace: true });
+      }, 2000);
     }
   }, [activeUser, navigate]);
   return (
@@ -59,6 +69,7 @@ const Signup = () => {
         <TextField
           variant="outlined"
           label="Name"
+          placeholder="Name"
           type="text"
           required
           value={cred.name}
@@ -81,7 +92,19 @@ const Signup = () => {
           onChange={(e) => setCred({ ...cred, password: e.target.value })}
         />
         <Button onClick={handleFormSubmit} variant="contained">
-          Sign up
+          {loading ? (
+            <ColorRing
+              visible={true}
+              height="40"
+              width="40"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={["#f0f8ff", "#f0f8ff", "#f0f8ff", "#f0f8ff", "#f0f8ff"]}
+            />
+          ) : (
+            "Sign up"
+          )}
         </Button>
         <Button
           onClick={() => navigate("/users/login", { replace: true })}
